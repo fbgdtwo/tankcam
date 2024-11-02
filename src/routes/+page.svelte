@@ -14,6 +14,7 @@
     const config = {
         autoStartLoad: true,
         startPosition: -1,
+        liveSyncDurationCount: 5,
         debug: false,
         enableWorker: true,
     };
