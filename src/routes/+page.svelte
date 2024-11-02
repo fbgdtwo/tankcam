@@ -20,8 +20,8 @@
 
     onMount(async () => {
         main_video = document.getElementById("video");
-        blip = new Audio('static/blip.mp3');
-        chunk = new Audio('static/chunk-short.mp3')
+        blip = new Audio('blip.mp3');
+        chunk = new Audio('chunk-short.mp3')
         try {
             const response = await fetch(FISHTANK_STREAMS);
             if (!response.ok) {
