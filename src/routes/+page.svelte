@@ -52,13 +52,13 @@
 </style>
 
 <div class="flex flex-col xl:flex-row">
-    <video controls autoplay id="video" class="w-full max-h-screen h-auto xl:w-11/12"></video>
+    <video controls autoplay muted id="video" class="w-full max-h-screen h-auto xl:w-11/12"></video>
 
     <div class="w-full xl:w-1/12">
         {#if streams.length > 0}
             <div class="flex flex-wrap">
                 {#each streams as stream}
-                    <div class="btn btn-sm grow m-1 text-xs" on:click={() => selectVideo(stream.stream)}>
+                    <div class="btn btn-outline btn-sm grow m-1 text-xs" on:click={() => selectVideo(stream.stream)}>
                         <p>{stream.description}</p>
                     </div>
                 {/each}
