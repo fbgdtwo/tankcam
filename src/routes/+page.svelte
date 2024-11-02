@@ -7,6 +7,13 @@
     let currentVideoSrc = '';
     const FISHTANK_STREAMS = "https://ft.93.gay/streams.m3u8";
 
+    const config = {
+        autoStartLoad: true,
+        startPosition: -1,
+        debug: false,
+        enableWorker: true,
+    }
+
     onMount(async () => {
         main_video = document.getElementById("video");
         try {
@@ -34,7 +41,7 @@
         if (main_video.canPlayType("application/vnd.apple.mpegurl")) {
             main_video.src = currentVideoSrc;
         } else if (Hls.isSupported()) {
-            const hls = new Hls();
+            const hls = new Hls(config);
             hls.loadSource(currentVideoSrc);
             hls.attachMedia(main_video);
         }
