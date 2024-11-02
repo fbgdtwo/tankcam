@@ -6,7 +6,8 @@
     let streams = [];
     let currentVideoSrc = '';
     let activeIndex = 0;
-    let audio;
+    let blip;
+    let chunk;
     const FISHTANK_STREAMS = "https://ft.93.gay/streams.m3u8";
     //const FISHTANK_STREAMS = "https://ft-hetzner.3045x.com/streams";
 
@@ -19,7 +20,8 @@
 
     onMount(async () => {
         main_video = document.getElementById("video");
-        audio = new Audio('src/static/blip.mp3');
+        blip = new Audio('src/static/blip.mp3');
+        chunk = new Audio('src/static/chunk-short.mp3')
         try {
             const response = await fetch(FISHTANK_STREAMS);
             if (!response.ok) {
@@ -64,7 +66,7 @@
     function selectVideo(stream, index) {
         activeIndex = index;
         currentVideoSrc = stream;
-        play_blip();
+        play_chunk();
         set_up_main_video();
     }
 
@@ -92,8 +94,14 @@
     }
 
     function play_blip() {
-        if (audio) {
-            audio.play();
+        if (blip) {
+            blip.play();
+        }
+    }
+
+    function play_chunk() {
+        if (chunk) {
+            chunk.play();
         }
     }
 </script>
