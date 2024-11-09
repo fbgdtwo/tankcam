@@ -8,8 +8,8 @@
     let activeIndex = 0;
     let blip;
     let chunk;
-    const FISHTANK_STREAMS = "https://ft.93.gay/streams.m3u8";
-    //const FISHTANK_STREAMS = "https://ft-hetzner.3045x.com/streams";
+    //const FISHTANK_STREAMS = "https://ft.93.gay/streams.m3u8";
+    const FISHTANK_STREAMS = "https://ft-hetzner.3045x.com/streams";
 
     const config = {
         autoStartLoad: true,
@@ -28,17 +28,19 @@
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            let lines = await response.text();
-            let lines_arr = lines.split("\n").slice(1, 49);
-            for (let i = 0; i < lines_arr.length; i += 2) {
-                streams.push({ "description": lines_arr[i].slice(36), "stream": lines_arr[i + 1], "active": false });
-            }
+            // let lines = await response.text();
+            // let lines_arr = lines.split("\n").slice(1, 49);
+            // for (let i = 0; i < lines_arr.length; i += 2) {
+            //     streams.push({ "description": lines_arr[i].slice(36), "stream": lines_arr[i + 1], "active": false });
+            // }
+            let response_json = await response.json()
+            streams = response_json.streams
             streams = [...streams];
-            console.log(streams);
+            //console.log(streams);
             
             
             if (streams.length > 0) {
-                currentVideoSrc = streams[0].stream;
+                currentVideoSrc = streams[0].playlist;
                 set_up_main_video();
             }
         } catch (err) {
@@ -123,9 +125,9 @@
                     <!-- svelte-ignore a11y_click_events_have_key_events -->
                     <!-- svelte-ignore a11y_no_static_element_interactions -->
                     <div class="btn btn-outline btn-sm grow m-1 text-xs {activeIndex === index ? 'active' : ''}" 
-                    on:click={() => selectVideo(stream.stream, index)}
+                    on:click={() => selectVideo(stream.playlist, index)}
                     on:mouseenter={() => play_blip()}>
-                        <p>{stream.description}</p>
+                        <p>{stream.name}</p>
                     </div>
                 {/each}
             </div>
