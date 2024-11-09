@@ -101,7 +101,7 @@
 
         // Ensure nextIndex is within bounds before accessing streams[nextIndex]
         if (streams[nextIndex]) {
-            selectVideo(streams[nextIndex].stream, nextIndex);
+            selectVideo(streams[nextIndex].playlist, nextIndex);
         }
     }
 
