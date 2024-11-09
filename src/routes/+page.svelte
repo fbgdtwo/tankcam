@@ -2,6 +2,7 @@
     import Hls from "hls.js";
     import { onMount } from "svelte";
 
+    let hls;
     let main_video;
     let streams = [];
     let currentVideoSrc = '';
@@ -57,13 +58,21 @@
 
     function set_up_main_video() {
         if (main_video.canPlayType("application/vnd.apple.mpegurl")) {
+            // For browsers that natively support HLS (e.g., Safari)
             main_video.src = currentVideoSrc;
         } else if (Hls.isSupported()) {
-            const hls = new Hls(config);
-            hls.loadSource(currentVideoSrc);
-            hls.attachMedia(main_video);
+            if (hls) {
+                // If HLS instance exists, just load the new source without recreating the HLS object
+                hls.loadSource(currentVideoSrc);
+            } else {
+                // If no HLS instance exists, create a new one
+                hls = new Hls(config);
+                hls.loadSource(currentVideoSrc);
+                hls.attachMedia(main_video);
+            }
+        } else {
+            console.error("HLS is not supported on this browser.");
         }
-        main_video.play();
     }
 
     function selectVideo(stream, index) {
